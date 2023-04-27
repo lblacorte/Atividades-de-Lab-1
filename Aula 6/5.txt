@@ -1,0 +1,11 @@
+Não, pois, levando em conta a função maior() e as variáveis x e y, sendo uma delas esse valor intermediário, e a outra sendo o maior valor, será retornado o maior valor. Depois, a função menor() retornará o menor valor, pois ele será comparado com o maior.
+
+Exemplo:
+x = 5
+y = 7
+z = 2
+
+maior() ---> retorna 7
+menor() ---> retorna 2
+
+2 é impresso, e ele não é o intermediário

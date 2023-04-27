@@ -1,0 +1,3 @@
+A função q eleva o x ao quadrado
+E depois main atribui esse valor a y
+Portanto o printf vai imprimir "5 25"

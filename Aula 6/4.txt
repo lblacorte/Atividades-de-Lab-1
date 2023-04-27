@@ -1,0 +1,8 @@
+O programa serve para calcular o maior entre x e y
+E depois esse valor é comparado com z, retornando o menor
+Portando, sendo x=5 e y=7, a função maior() retorna y
+Depois, sendo z=6, a função menor() retorna z
+É esse valor que é printado na tela, portanto o código imprime:
+
+"6
+"
