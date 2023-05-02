@@ -24,36 +24,95 @@ int main(){
   float num;
   char operacao = '\0';
   int i = 0;
-  float total;
+  float total = '\0';
+  float nesp;
+  char cesp = '\0';
+  float totalesp, totalesp1 = '\0';
   
   printf("Digite a operação desejada: ");
 
-  while(operacao != '\n'){
+  while(operacao != '\n' || cesp != '\0'){
     if(i == 0 || operacao == '+' || operacao == '-' || operacao == '*' || operacao == '/'){
     scanf("%f", &num);
     }
-    if(operacao == '+'){
-      total = soma(total, num);
+    if(cesp != '\0' && (operacao == '+' || operacao == '-')){
+      switch(cesp){
+      case '+':
+        totalesp = soma(totalesp, nesp);
+        nesp = num;
+        cesp = operacao;
+        break;
+      case '-':
+        totalesp = subtracao(totalesp, nesp);
+        nesp = num;
+        cesp = operacao;
+      }
     }
-    else if(operacao == '-'){
-      total = subtracao(total, num);
+      else if(totalesp1 != '\0' && cesp != '\0' && nesp == '\0' && (operacao == '*' || operacao == '/')){
+        switch(cesp){
+      case '+':
+        total = soma(totalesp, totalesp1);
+        cesp = '\0';
+        break;
+        break;
+      case '-':
+        total = subtracao(totalesp, totalesp1);
+        cesp = '\0';
+        break;
+        break;
+      }
+      }
+    else if(i == 1){
+    i++;
+    switch(operacao){
+      case '+':
+        nesp = num;
+        cesp = operacao;
+        break;
+      case '-':
+        nesp = num;
+        cesp = operacao;
+        break;
+      case '*':
+        total = multiplicacao(total, num);
+        break;
+      case '/':
+        total = divisao(total, num);
     }
-    else if(operacao == '*'){
-      total = multiplicacao(total, num);
-    }
-    else if(operacao == '/'){
-      total = divisao(total, num);
-    }
-    else if(i == 0){
-      total = num;
-      i++;
     }
     else{
-      printf("Caractere inválido!\n");
-      operacao = '\n';
+      switch(operacao){
+      case '+':
+        totalesp = soma(totalesp, nesp);
+        nesp = num;
+        cesp = operacao;
+        break;
+      case '-':
+        totalesp = subtracao(totalesp, nesp);
+        nesp = num;
+        cesp = operacao;
+        break;
+      case '*':
+        totalesp1 = multiplicacao(nesp, num);
+        cesp = '\0';
+        nesp = '\0';
+        break;
+      case '/':
+        totalesp1 = divisao(nesp, num);
+        cesp = '\0';
+        nesp = '\0';
+        break;
     }
+    }
+    if(i == 0){
+      totalesp = num;
+      i++;
+    }
+    // else{
+    //   printf("Caractere inválido!\n");
+    //   operacao = '\n';
+    // }
     operacao = getchar();
-    i++;
   }
-  printf("O resultado é: %f", total);
+  printf("O resultado é: %g", total);
 }
