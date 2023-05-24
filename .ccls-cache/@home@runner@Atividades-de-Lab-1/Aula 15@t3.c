@@ -154,55 +154,50 @@ void exibirGabarito(int corA[3], int corB[3]){
   corl(0, 16, 120);
   printf("----------> GABARITO:");
   corl(corA[0], corA[1], corA[2]);
-  printf("\n\tCor certa\t\t\t\t\t\t");
+  printf("\n\tCor certa\t\t\t");
   corl(corB[0], corB[1], corB[2]);
   printf("Seu chute");
   corl(255, 0, 0);
-  printf("\n\tR: %d\t\t\t\t\t\t\tR: %d", corA[0], corB[0]);
+  printf("\n\tR: %d\t\t\t\tR: %d", corA[0], corB[0]);
   corl(0, 255, 0);
-  printf("\n\tG: %d\t\t\t\t\t\t\tG: %d", corA[1], corB[1]);
+  printf("\n\tG: %d\t\t\t\tG: %d", corA[1], corB[1]);
   corl(0, 0, 255);
-  printf("\n\tB: %d\t\t\t\t\t\t\tB: %d", corA[2], corB[2]);
+  printf("\n\tB: %d\t\t\t\tB: %d", corA[2], corB[2]);
 }
 
-void verificarRank(float pontos, float rank[3], char nome1[20], char nome2[20], char nome3[20], char nomeNovo[20])
+void verificarRank(float pontos, float rank[3], char nomes[3][20], char nomeNovo[20])
 {
   float aux1, aux2;
   char auxil1[20], auxil2[20];
-  if(pontos >= rank[0]){
-    aux1 = rank[0];
-    strcpy(auxil1, nome1);
-    rank[0] = pontos;
-    strcpy(nome1, nomeNovo);
-    aux2 = rank[1];
-    strcpy(auxil2, nome2);
-    rank[1] = aux1;
-    strcpy(nome2, auxil1);
-    rank[2] = aux2;
-    strcpy(nome3, auxil2);
-  }
-  else if(pontos >= rank[1]){
-    aux1 = rank[1];
-    strcpy(auxil1, nome2);
-    rank[1] = pontos;
-    strcpy(nome2, nomeNovo);
-    rank[2] = aux1;
-    strcpy(nome3, auxil1);
-  }
-  else if(pontos >= rank[2]){
-    rank[2] = pontos;
-    strcpy(nome3, nomeNovo);
+  for(int i = 0; i < 3; i++){
+    if(pontos >= rank[i]){
+      aux1 = rank[i];
+      strcpy(auxil1, nomes[i]);
+      rank[i] = pontos;
+      strcpy(nomes[i], nomeNovo);
+        if(i == 0 || i == 1){
+          aux2 = rank[i+1];
+          strcpy(auxil2, nomes[i+1]);
+          rank[i+1] = aux1;
+          strcpy(nomes[i+1], auxil1);
+            if(i == 0){
+              rank[i+2] = aux2;
+              strcpy(nomes[i+2], auxil2);
+            }
+        }
+      return;
+    }
   }
 }
 
-void exibirRank(float rank[3], char nome1[20], char nome2[20], char nome3[20]){
+void exibirRank(float rank[3], char nomes[3][20]){
   corl(255, 0, 0);
   printf("\n\n$$$$$$$$$$$$$$$$$$$$$$$$$$$ TOP SCORE $$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n");
-  printf("1º - %s com %.2f pontos\n", nome1, rank[0]);
-  if(rank[1] >= 0)
-  printf("2º - %s com %.2f pontos\n", nome2, rank[1]);
-  if(rank[2] >= 0)
-  printf("3º - %s com %.2f pontos\n", nome3, rank[2]);
+  for(int i = 0; i < 3; i++){
+    if(rank[i] >= 0){
+      printf("%dº - %s com %.2f pontos\n", i+1, nomes[i], rank[i]);
+    }
+  }
 }
 
 int main()
@@ -211,7 +206,7 @@ int main()
   int corB[3] = {0, 0, 0};
   bool novaP = true;
   float rank[3] = {-1, -1, -1};
-  char nome1[20], nome2[20], nome3[20];
+  char nomes[3][20];
 
   while(novaP == true){
   for (int i = 0; i < 5; i++){
@@ -286,9 +281,9 @@ int main()
   char auxi[20];
   printf("Digite seu nome para colocar no ranking: ");
   scanf("%s", auxi);
-  verificarRank(pontos, rank, nome1, nome2, nome3, auxi);
+  verificarRank(pontos, rank, nomes, auxi);
   }
-  exibirRank(rank, nome1, nome2, nome3);
+  exibirRank(rank, nomes);
   corl(0, 0, 0);
   printf("\nDigite 0 para sair ou 1 para nova partida: ");
   int temp;
