@@ -71,7 +71,7 @@ bool verificar(int codCor) //função para verificar se o número digitado é v�
   if(codCor < 0 || codCor > 255){
     printf("Você precisa digitar um valor entre 0 e 255! Aperte enter para tentar novamente.");
     getchar(); getchar();
-    printf("\e[3A"); //leva o cursor 3 linhas para cima
+    printf("\e[2A"); //leva o cursor 3 linhas para cima
     printf("\e[0J\r"); //apaga do cursor até o fim da tela
     return false;
   }
@@ -79,47 +79,27 @@ bool verificar(int codCor) //função para verificar se o número digitado é v�
 }
 
 void barras(int cor[3]){ //função para mostrar as barras coloridas
-  corl(255, 0, 0);
-  printf("R ");
-  for (int i = 0; i <= 252; i = i+4){
-    if(cor[0] >= i && cor[0] < i+4){
-      corf(255, 255, 255);
-      corl(255, 221, 0);
-      printf(">");
+  for(int c = 0; c < 3; c++){
+    corf(255, 255, 255);
+    switch (c){
+      case 0: corl(255, 0, 0); printf("R "); break;
+      case 1: corl(0, 255, 0); printf("\nG "); break;
+      case 2: corl(0, 0, 255); printf("\nB "); break;
     }
-    else{
-      corf(i, 0, 0);
-      printf(" ");
-    }
-  }
-  
-  corf(255, 255, 255);
-  corl(0, 255, 0);
-  printf("\nG ");
-  for (int i = 0; i <= 252; i = i+4){
-    if(cor[1] >= i && cor[1] < i+4){
-      corf(255, 255, 255);
-      corl(255, 221, 0);
-      printf(">");
-    }
-    else{
-      corf(0, i, 0);
-      printf(" ");
-    }
-  }
-  
-  corf(255, 255, 255);
-  corl(0, 0, 255);
-  printf("\nB ");
-  for (int i = 0; i <= 252; i = i+4){
-    if(cor[2] >= i && cor[2] < i+4){
-      corf(255, 255, 255);
-      corl(255, 221, 0);
-      printf(">");
-    }
-    else{
-      corf(0, 0, i);
-      printf(" ");
+    for (int i = 0; i <= 252; i = i+4){
+      if(cor[c] >= i && cor[c] < i+4){
+        corf(255, 255, 255);
+        corl(255, 221, 0);
+        printf(">");
+      }
+      else{
+        switch (c){
+          case 0: corf(i, 0, 0); break;
+          case 1: corf(0, i, 0); break;
+          case 2: corf(0, 0, i); break;
+        }
+        printf(" ");
+      }
     }
   }
 }
